@@ -1,13 +1,34 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native'
+
+import Register from './src/Screens/Register'
+import ResetPassword from './src/Screens/ResetPassword'
+import { createStackNavigator } from '@react-navigation/stack'
+import { Provider } from 'react-native-paper'
+import { NavigationContainer } from '@react-navigation/native'
+import { theme } from './src/core/theme'
+import MainScreen from './src/Screens/'
+import Login from './src/Screens/Login'
 
 export default function App() {
+  const Stack = createStackNavigator()
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+    <Provider theme={theme}>
+      {/* <NavigationContainer>
+        <Stack.Navigator
+          initialRouteName="LoginScreen"
+          screenOptions={{
+            headerShown: false,
+          }}
+        >
+          <Stack.Screen name="LoginScreen" component={Login} />
+          <Stack.Screen name="RegisterScreen" component={Register} />
+          <Stack.Screen name="ResetPasswordScreen" component={ResetPassword} />
+          <Stack.Screen name="HomeScreen" component={Home} />
+        </Stack.Navigator>
+      </NavigationContainer> */}
+      <MainScreen />
+    </Provider>
+  )
 }
 
 const styles = StyleSheet.create({
@@ -17,4 +38,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-});
+})
