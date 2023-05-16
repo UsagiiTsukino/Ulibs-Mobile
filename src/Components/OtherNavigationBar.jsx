@@ -5,24 +5,14 @@ import { Badge } from 'react-native-paper'
 import Icon from 'react-native-vector-icons/Ionicons'
 import CartAndChatBubble from './CartAndChatBubble'
 import { Animated } from 'react-native'
+
 export default function NavigationBar() {
   // const [searchQuery, setSearchQuery] = React.useState('');
 
   // const onChangeSearch = query => setSearchQuery(query);
   const scrollY = useRef(new Animated.Value(0)).current
   return (
-    <Animated.View
-      style={[
-        styles.container,
-        {
-          backgroundColor: scrollY.interpolate({
-            inputRange: [0, 30],
-            outputRange: ['transparent', '#fff'],
-            extrapolate: 'clamp',
-          }),
-        },
-      ]}
-    >
+    <View style={styles.container}>
       {/* <View style={styles.container}> */}
       <View style={styles.leftContainer}>
         <Icon name="ios-search" size={20} color="#888" style={styles.icon} />
@@ -35,9 +25,9 @@ export default function NavigationBar() {
         />
       </View>
       <View style={styles.rightContainer}>
-        <CartAndChatBubble iconColor={'#fff'} />
+        <CartAndChatBubble iconColor={'#fb5831'} />
       </View>
-    </Animated.View>
+    </View>
   )
 }
 const styles = StyleSheet.create({
@@ -52,10 +42,10 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     paddingHorizontal: 16,
     position: 'fixed',
-    top: 35,
+    top: 0,
     left: 0,
     zIndex: 1,
-    backgroundColor: 'brown',
+    backgroundColor: '#fff',
   },
   leftContainer: {
     flexDirection: 'row',

@@ -14,7 +14,7 @@ function FlashSaleSection() {
           />
           <CountDown
             size={8}
-            until={1000}
+            until={100000}
             // onFinish={() => {}}
             digitStyle={{
               backgroundColor: '#FFF',
@@ -51,9 +51,97 @@ function FlashSaleSection() {
               source={require('../assets/mock/cay-cam-ngot.jpg')}
               style={styles.productImage}
             />
+            <View>
+              <Text style={styles.price}>70.000 đ</Text>
+            </View>
+            <View style={{ marginHorizontal: 15, position: 'relative' }}>
+              <View style={styles.progessBar}></View>
+              <View style={styles.currentProgessBar}></View>
+              <Text numberOfLines={1} style={styles.textInProgressBar}>
+                Đã bán 50
+              </Text>
+            </View>
           </View>
-          <View style={styles.productItem}></View>
-          <View style={styles.productItem}></View>
+          <View style={styles.productItem}>
+            <Image
+              source={require('../assets/mock/cay-cam-ngot.jpg')}
+              style={styles.productImage}
+            />
+            <View>
+              <Text style={styles.price}>70.000 đ</Text>
+            </View>
+            <View style={{ marginHorizontal: 15, position: 'relative' }}>
+              <View style={styles.progessBar}></View>
+              <View style={styles.currentProgessBar}></View>
+              <Text numberOfLines={1} style={styles.textInProgressBar}>
+                Đã bán 50
+              </Text>
+            </View>
+          </View>
+          <View style={styles.productItem}>
+            <Image
+              source={require('../assets/mock/cay-cam-ngot.jpg')}
+              style={styles.productImage}
+            />
+            <View>
+              <Text style={styles.price}>70.000 đ</Text>
+            </View>
+            <View style={{ marginHorizontal: 15, position: 'relative' }}>
+              <View style={styles.progessBar}></View>
+              <View style={styles.currentProgessBar}></View>
+              <Text numberOfLines={1} style={styles.textInProgressBar}>
+                Đã bán 50
+              </Text>
+            </View>
+          </View>
+          <View style={styles.productItem}>
+            <Image
+              source={require('../assets/mock/cay-cam-ngot.jpg')}
+              style={styles.productImage}
+            />
+            <View>
+              <Text style={styles.price}>70.000 đ</Text>
+            </View>
+            <View style={{ marginHorizontal: 15, position: 'relative' }}>
+              <View style={styles.progessBar}></View>
+              <View style={styles.currentProgessBar}></View>
+              <Text numberOfLines={1} style={styles.textInProgressBar}>
+                Đã bán 50
+              </Text>
+            </View>
+          </View>
+          <View style={styles.productItem}>
+            <Image
+              source={require('../assets/mock/cay-cam-ngot.jpg')}
+              style={styles.productImage}
+            />
+            <View>
+              <Text style={styles.price}>70.000 đ</Text>
+            </View>
+            <View style={{ marginHorizontal: 15, position: 'relative' }}>
+              <View style={styles.progessBar}></View>
+              <View style={styles.currentProgessBar}></View>
+              <Text numberOfLines={1} style={styles.textInProgressBar}>
+                Đã bán 50
+              </Text>
+            </View>
+          </View>
+          <View style={styles.productItem}>
+            <Image
+              source={require('../assets/mock/cay-cam-ngot.jpg')}
+              style={styles.productImage}
+            />
+            <View>
+              <Text style={styles.price}>70.000 đ</Text>
+            </View>
+            <View style={{ marginHorizontal: 15, position: 'relative' }}>
+              <View style={styles.progessBar}></View>
+              <View style={styles.currentProgessBar}></View>
+              <Text numberOfLines={1} style={styles.textInProgressBar}>
+                Đã bán 50
+              </Text>
+            </View>
+          </View>
         </ScrollView>
       </View>
     </View>
@@ -94,14 +182,51 @@ const styles = StyleSheet.create({
   contentContaier: {},
   scrollProduct: {
     height: 200,
-    width: 900,
-    backgroundColor: 'brown',
   },
   productItem: {
     width: 140,
     height: 200,
     backgroundColor: '#fff',
     marginLeft: 16,
+  },
+  productImage: {
+    width: '100%',
+    height: 150,
+    resizeMode: 'contain',
+  },
+  price: {
+    textAlign: 'center',
+    color: '#fb5831',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  progessBar: {
+    width: `100%`,
+    backgroundColor: '#ffbda6',
+    height: 15,
+    borderRadius: 20,
+  },
+  currentProgessBar: {
+    width: `75%`,
+    backgroundColor: '#fb5831',
+    height: 15,
+    borderRadius: 20,
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    zIndex: 4,
+  },
+  textInProgressBar: {
+    flex: 1,
+    position: 'absolute',
+    top: 1.5,
+    left: 25,
+    zIndex: 5,
+    justifyContent: 'center',
+    color: 'white',
+    textTransform: 'uppercase',
+    fontWeight: 'bold',
+    fontSize: 10,
   },
 })
 export default FlashSaleSection

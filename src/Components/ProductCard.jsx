@@ -1,0 +1,64 @@
+import { Text } from 'react-native'
+import { StyleSheet, Image, View } from 'react-native'
+
+function ProductCard() {
+  return (
+    <>
+      <View style={styles.productCard}>
+        <Image
+          source={require('../assets/mock/dark-nhan-tam.jpg')}
+          style={styles.productImage}
+        />
+        <View style={styles.productBody}>
+          <Text style={styles.title} numberOfLines={2}>
+            Dark nhân tâm siêu hay siêu cảm động dạy làm người siêu chất
+          </Text>
+          <View style={styles.priceContainer}>
+            <Text style={styles.price}>70.000 đ</Text>
+            <Text style={styles.sold}>Đã bán 5.2k</Text>
+          </View>
+        </View>
+      </View>
+    </>
+  )
+}
+const styles = StyleSheet.create({
+  productCard: {
+    width: '48%',
+    height: 250,
+    marginVertical: 4,
+    marginHorizontal: 4,
+    backgroundColor: '#fff',
+  },
+  productImage: {
+    width: '100%',
+    height: 160,
+    resizeMode: 'contain',
+  },
+  productBody: {
+    padding: 8,
+    backgroundColor: '#fff',
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    height: 80,
+  },
+  title: {
+    fontSize: 12.5,
+  },
+  priceContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  price: {
+    textAlign: 'center',
+    color: '#fb5831',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  sold: {
+    fontSize: 11,
+    color: '#8d9bad',
+  },
+})
+export default ProductCard

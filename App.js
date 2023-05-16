@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StatusBar, StyleSheet, Text, View } from 'react-native'
 
 import Register from './src/Screens/Register'
 import ResetPassword from './src/Screens/ResetPassword'
@@ -8,11 +8,13 @@ import { NavigationContainer } from '@react-navigation/native'
 import { theme } from './src/core/theme'
 import MainScreen from './src/Screens/'
 import Login from './src/Screens/Login'
+import Cart from './src/Screens/Cart'
 
 export default function App() {
   const Stack = createStackNavigator()
   return (
     <Provider theme={theme}>
+      <StatusBar barStyle="dark-content" />
       {/* <NavigationContainer>
         <Stack.Navigator
           initialRouteName="LoginScreen"
@@ -26,7 +28,8 @@ export default function App() {
           <Stack.Screen name="HomeScreen" component={Home} />
         </Stack.Navigator>
       </NavigationContainer> */}
-      <MainScreen />
+      {/* <MainScreen /> */}
+      <Cart />
     </Provider>
   )
 }

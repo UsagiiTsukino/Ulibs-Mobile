@@ -85,7 +85,7 @@ function HomeCarousel() {
 }
 const styles = StyleSheet.create({
   wrapContainer: {
-    marginTop: 0,
+    marginTop: -55,
   },
   container: {
     paddingHorizontal: 0,
