@@ -17,7 +17,16 @@ function Cart() {
   return (
     <SafeAreaView style={styles.droidSafeArea}>
       <View style={styles.header}>
-        <Text style={{ fontSize: 20 }}>Giỏ hàng</Text>
+        <TouchableOpacity
+          style={{
+            marginLeft: -75,
+          }}
+        >
+          <Icon name="chevron-back-outline" size={40} color={'#ccc'} />
+        </TouchableOpacity>
+        <Text style={{ fontSize: 20, textAlign: 'center', marginLeft: 120 }}>
+          Giỏ hàng
+        </Text>
         <View
           style={{
             flexDirection: 'row',
@@ -212,9 +221,11 @@ const styles = StyleSheet.create({
   header: {
     height: 60,
     flexDirection: 'row',
-    marginLeft: 170,
     alignItems: 'center',
     backgroundColor: '#fff',
+    width: '100%',
+    // justifyContent: 'space-between',
+    marginLeft: 80,
   },
   iconContainer: {
     paddingHorizontal: 8,

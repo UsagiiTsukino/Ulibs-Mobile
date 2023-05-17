@@ -1,7 +1,9 @@
 import { Text } from 'react-native'
 import { StyleSheet, Image, View } from 'react-native'
 
-function ProductCard() {
+function ProductCard(props) {
+  const { imgSource, productName, productPrice } = props
+
   return (
     <>
       <View style={styles.productCard}>
@@ -11,10 +13,10 @@ function ProductCard() {
         />
         <View style={styles.productBody}>
           <Text style={styles.title} numberOfLines={2}>
-            Dark nhân tâm siêu hay siêu cảm động dạy làm người siêu chất
+            {productName || 'Bị lỗi'}
           </Text>
           <View style={styles.priceContainer}>
-            <Text style={styles.price}>70.000 đ</Text>
+            <Text style={styles.price}>{productPrice || '0'}</Text>
             <Text style={styles.sold}>Đã bán 5.2k</Text>
           </View>
         </View>

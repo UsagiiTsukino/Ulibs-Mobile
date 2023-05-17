@@ -19,8 +19,11 @@ export default function Explore({ navigation }) {
     <SafeAreaView style={styles.droidSafeArea}>
       <ScrollView
         vertical
-        // contentContainerStyle={styles.scrollCategory}
+        contentContainerStyle={{
+          backgroundColor: '#fff',
+        }}
         showsHorizontalScrollIndicator={false}
+        stickyHeaderIndices={[0]}
       >
         <NavigationBar />
         <View
@@ -95,6 +98,7 @@ const styles = StyleSheet.create({
   droidSafeArea: {
     flex: 1,
     paddingTop: Platform.OS === 'android' ? 25 : 0,
+    backgroundColor: '#fff',
   },
   guranteeImg: {
     resizeMode: 'contain',

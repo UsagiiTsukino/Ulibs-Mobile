@@ -13,8 +13,6 @@ function Avatar(props) {
           {
             width: size,
             height: size,
-            borderColor: '#fff',
-            borderWidth: 10,
             borderRadius: 200,
           },
           style,

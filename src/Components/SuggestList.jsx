@@ -1,8 +1,23 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import ProductCard from './ProductCard'
+import { useAppDispatch } from '../redux/store'
+import { getProduct } from '../redux/Reducer/book.slice'
+import { useSelector } from 'react-redux'
 
 function SuggestList() {
+  const dispatch = useAppDispatch()
+  const bookList = useSelector((state) => state.root.book)
+  // dispatch(getProduct())
+  useEffect(() => {
+    const promise = dispatch(getProduct())
+    return () => {
+      promise.abort()
+    }
+  }, [])
+  console.log('bookList')
+  console.log(bookList)
+
   return (
     <View>
       <View style={styles.container}>
@@ -11,11 +26,13 @@ function SuggestList() {
         </View>
       </View>
       <View style={styles.contentContainer}>
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
+        {bookList.map((book) => (
+          <ProductCard
+            imgSource={book.image}
+            productName={book.bookName}
+            productPrice={book.bookPrice}
+          />
+        ))}
       </View>
     </View>
   )

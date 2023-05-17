@@ -222,6 +222,8 @@ const styles = StyleSheet.create({
   },
   avatar: {
     marginTop: -80,
+    borderColor: '#fff',
+    borderWidth: 10,
   },
   nameSection: {
     // backgroundColor: 'brown',

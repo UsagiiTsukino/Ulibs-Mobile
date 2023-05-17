@@ -89,6 +89,7 @@ const styles = StyleSheet.create({
   },
   container: {
     paddingHorizontal: 0,
+    backgroundColor: '#fff',
   },
 })
 export default HomeCarousel

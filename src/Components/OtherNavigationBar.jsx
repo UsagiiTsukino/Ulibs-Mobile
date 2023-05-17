@@ -6,13 +6,14 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import CartAndChatBubble from './CartAndChatBubble'
 import { Animated } from 'react-native'
 
-export default function NavigationBar() {
+export default function NavigationBar(props) {
+  const { style } = props
   // const [searchQuery, setSearchQuery] = React.useState('');
 
   // const onChangeSearch = query => setSearchQuery(query);
   const scrollY = useRef(new Animated.Value(0)).current
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, style]}>
       {/* <View style={styles.container}> */}
       <View style={styles.leftContainer}>
         <Icon name="ios-search" size={20} color="#888" style={styles.icon} />
@@ -38,12 +39,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    borderRadius: 8,
     paddingVertical: 8,
     paddingHorizontal: 16,
-    position: 'fixed',
-    top: 0,
-    left: 0,
     zIndex: 1,
     backgroundColor: '#fff',
   },

@@ -12,13 +12,16 @@ import { passwordValidator } from '../helpers/passwordValidator'
 function Login({ navigation }) {
   const [email, setEmail] = useState({ value: '', error: '' })
   const [password, setPassword] = useState({ value: '', error: '' })
+  const [username, setUsername] = useState({ value: '', error: '' })
 
   const onLoginPressed = () => {
     const emailError = emailValidator(email.value)
     const passwordError = passwordValidator(password.value)
-    if (emailError || passwordError) {
+    const usernameError = username === '' ? 'Tài khoản không được để trống' : ''
+    if (emailError || passwordError || usernameError) {
       setEmail({ ...email, error: emailError })
       setPassword({ ...password, error: passwordError })
+      setUsername({ ...username, error: usernameError })
       return
     } else return navigation.navigate('HomeScreen')
   }
@@ -38,6 +41,15 @@ function Login({ navigation }) {
         autoCompleteType="email"
         textContentType="emailAddress"
         keyboardType="email-address"
+      />
+      <TextInput
+        label="Tên đăng nhập"
+        returnKeyType="next"
+        value={username.value}
+        onChangeText={(text) => setUsername({ value: text, error: '' })}
+        error={!!username.error}
+        errorText={username.error}
+        autoCapitalize="none"
       />
       <TextInput
         label="Password"

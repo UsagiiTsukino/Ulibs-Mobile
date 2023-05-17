@@ -9,6 +9,8 @@ import { ScrollView } from 'react-native'
 import HotSearch from '../Components/HotSearch'
 import SuggestList from '../Components/SuggestList'
 import { Animated } from 'react-native'
+import { Provider } from 'react-native-paper'
+import { theme } from '../core/theme'
 
 export default function Home({ navigation }) {
   const scrollY = useRef(new Animated.Value(0)).current
@@ -17,6 +19,7 @@ export default function Home({ navigation }) {
       vertical
       showsVerticalScrollIndicator={false}
       style={{ position: 'relative' }}
+      contentContainerStyle={styles.container}
       stickyHeaderIndices={[0]}
       onScroll={Animated.event(
         [{ nativeEvent: { contentOffset: { y: scrollY } } }],
@@ -39,4 +42,8 @@ export default function Home({ navigation }) {
     </Animated.ScrollView>
   )
 }
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: '#fff',
+  },
+})
