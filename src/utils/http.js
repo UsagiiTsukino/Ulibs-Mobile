@@ -4,7 +4,7 @@ class Http {
   instance
   constructor() {
     this.instance = axios.create({
-      baseURL: 'localhost:3000/',
+      baseURL: 'http://localhost/',
     })
   }
 }
