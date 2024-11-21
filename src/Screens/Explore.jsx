@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
   Platform,
   StyleSheet,
@@ -7,6 +7,7 @@ import {
   SafeAreaView,
   Image,
 } from 'react-native'
+
 import NavigationBar from '../Components/OtherNavigationBar'
 import { ScrollView } from 'react-native'
 import HomeCarousel from '../Components/HomeCarousel'
@@ -14,7 +15,17 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import CategoryItem from '../Components/CategoryItem'
 import SuggestList from '../Components/SuggestList'
 
+import { getProduct } from '../redux/Reducer/book.slice'
+import { useDispatch, useSelector } from 'react-redux'
 export default function Explore({ navigation }) {
+  const dispatch = useDispatch()
+  const bookList = useSelector((state) => state.root.book)
+  useEffect(() => {
+    const promise = dispatch(getProduct())
+    return () => {
+      promise.abort()
+    }
+  }, [])
   return (
     <SafeAreaView style={styles.droidSafeArea}>
       <ScrollView
@@ -89,7 +100,7 @@ export default function Explore({ navigation }) {
             </ScrollView>
           </View>
         </View>
-        <SuggestList />
+        <SuggestList bookList={bookList} />
       </ScrollView>
     </SafeAreaView>
   )

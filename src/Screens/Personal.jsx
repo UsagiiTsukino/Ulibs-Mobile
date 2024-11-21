@@ -9,7 +9,12 @@ import Icon from 'react-native-vector-icons/Feather'
 import { LinearGradient } from 'expo-linear-gradient'
 import { ScrollView } from 'react-native'
 import { Image } from 'react-native'
+
+import { useDispatch, useSelector } from 'react-redux'
+
 export default function Personal({ navigation }) {
+  const dispatch = useDispatch()
+  const user = useSelector((state) => state.root.user)
   return (
     <ScrollView vertical showsVerticalScrollIndicator={false}>
       <View style={styles.container}>
@@ -20,11 +25,11 @@ export default function Personal({ navigation }) {
           />
           <Avatar
             size={180}
-            source={require('../assets/mock/avatar.gif')}
+            source={{ uri: user.avatar_img }}
             style={styles.avatar}
           />
           <View style={styles.nameSection}>
-            <Text style={styles.user_name}>Nguyễn Trung Hiếu</Text>
+            <Text style={styles.user_name}>{user.displayName}</Text>
             <TouchableOpacity>
               <LinearGradient
                 colors={['#FFE53B', '#00FFFF']}
@@ -199,7 +204,12 @@ export default function Personal({ navigation }) {
             </View>
           </View>
         </View>
-        <TouchableOpacity style={styles.logoutBtn}>
+        <TouchableOpacity
+          style={styles.logoutBtn}
+          onPress={() => {
+            navigation.navigate('RegisterScreen')
+          }}
+        >
           <Text style={styles.logoutText}>Đăng xuất</Text>
         </TouchableOpacity>
       </View>

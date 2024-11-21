@@ -11,6 +11,7 @@ import Login from './src/Screens/Login'
 import Cart from './src/Screens/Cart'
 import Product from './src/Screens/Product'
 import { store } from './src/redux/store'
+import Payment from './src/Screens/Payment'
 
 export default function App() {
   const Stack = createStackNavigator()
@@ -18,7 +19,7 @@ export default function App() {
     <Provider store={store}>
       <StatusBar barStyle="dark-content" />
       <NavigationContainer>
-        {/* <Stack.Navigator
+        <Stack.Navigator
           initialRouteName="LoginScreen"
           screenOptions={{
             headerShown: false,
@@ -28,12 +29,16 @@ export default function App() {
           <Stack.Screen name="RegisterScreen" component={Register} />
           <Stack.Screen name="ResetPasswordScreen" component={ResetPassword} />
           <Stack.Screen name="HomeScreen" component={MainScreen} />
-        </Stack.Navigator> */}
-        <MainScreen />
+          <Stack.Screen name="CartScreen" component={Cart} />
+          <Stack.Screen name="ProductScreen" component={Product} />
+          <Stack.Screen name="PaymentScreen" component={Payment} />
+        </Stack.Navigator>
+        {/* <MainScreen />  */}
       </NavigationContainer>
 
       {/* <Cart /> */}
       {/* <Product /> */}
+      {/* <Payment /> */}
     </Provider>
   )
 }

@@ -1,26 +1,25 @@
 import { Text } from 'react-native'
 import { StyleSheet, Image, View } from 'react-native'
+import formatPrice from '../helpers/formatPrice'
 
 function ProductCard(props) {
   const { imgSource, productName, productPrice } = props
-
   return (
     <>
-      <View style={styles.productCard}>
-        <Image
-          source={require('../assets/mock/dark-nhan-tam.jpg')}
-          style={styles.productImage}
-        />
+      <>
+        <Image source={{ uri: imgSource }} style={styles.productImage} />
         <View style={styles.productBody}>
           <Text style={styles.title} numberOfLines={2}>
             {productName || 'Bị lỗi'}
           </Text>
           <View style={styles.priceContainer}>
-            <Text style={styles.price}>{productPrice || '0'}</Text>
+            <Text style={styles.price}>
+              {`${formatPrice(productPrice)}` || '0'}
+            </Text>
             <Text style={styles.sold}>Đã bán 5.2k</Text>
           </View>
         </View>
-      </View>
+      </>
     </>
   )
 }

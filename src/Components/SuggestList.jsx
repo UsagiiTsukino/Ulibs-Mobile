@@ -1,22 +1,14 @@
 import React, { useEffect } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import ProductCard from './ProductCard'
+
 import { getProduct } from '../redux/Reducer/book.slice'
 import { useDispatch, useSelector } from 'react-redux'
+import { useNavigation } from '@react-navigation/native'
 
-function SuggestList() {
-  const dispatch = useDispatch()
-  const bookList = useSelector((state) => state.root.book)
-  // dispatch(getProduct())
-  useEffect(() => {
-    const promise = dispatch(getProduct())
-    return () => {
-      promise.abort()
-    }
-  }, [])
-  console.log('bookList')
-  console.log(bookList)
-
+function SuggestList(props) {
+  const { bookList } = props
+  const navigation = useNavigation()
   return (
     <View>
       <View style={styles.container}>
@@ -26,12 +18,25 @@ function SuggestList() {
       </View>
       <View style={styles.contentContainer}>
         {bookList.map((book) => (
-          <ProductCard
+          <TouchableOpacity
             key={book.slug}
-            imgSource={book.image}
-            productName={book.bookName}
-            productPrice={book.bookPrice}
-          />
+            onPress={() => {
+              navigation.navigate('ProductScreen', { book })
+            }}
+            style={{
+              width: '48%',
+              height: 250,
+              marginVertical: 4,
+              marginHorizontal: 4,
+              backgroundColor: '#fff',
+            }}
+          >
+            <ProductCard
+              imgSource={book.image}
+              productName={book.bookName}
+              productPrice={book.price}
+            />
+          </TouchableOpacity>
         ))}
       </View>
     </View>
@@ -59,7 +64,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#efefef',
     flex: 1,
     flexDirection: 'row',
-    flexWrap: true,
+    flexWrap: 'wrap',
   },
 })
 

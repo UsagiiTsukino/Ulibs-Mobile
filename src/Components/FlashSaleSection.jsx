@@ -1,9 +1,21 @@
 import React from 'react'
-import { Image, ScrollView, StyleSheet, Text, View } from 'react-native'
+import {
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  Touchable,
+  TouchableOpacity,
+  View,
+} from 'react-native'
 import CountDown from 'react-native-countdown-component'
 import Icon from 'react-native-vector-icons/Ionicons'
+import formatPrice from '../helpers/formatPrice'
+import { useNavigation } from '@react-navigation/native'
 
-function FlashSaleSection() {
+function FlashSaleSection(props) {
+  const { bookList } = props
+  const navigation = useNavigation()
   return (
     <View>
       <View style={styles.container}>
@@ -46,102 +58,27 @@ function FlashSaleSection() {
           contentContainerStyle={styles.scrollProduct}
           showsHorizontalScrollIndicator={false}
         >
-          <View style={styles.productItem}>
-            <Image
-              source={require('../assets/mock/cay-cam-ngot.jpg')}
-              style={styles.productImage}
-            />
-            <View>
-              <Text style={styles.price}>70.000 đ</Text>
-            </View>
-            <View style={{ marginHorizontal: 15, position: 'relative' }}>
-              <View style={styles.progessBar}></View>
-              <View style={styles.currentProgessBar}></View>
-              <Text numberOfLines={1} style={styles.textInProgressBar}>
-                Đã bán 50
-              </Text>
-            </View>
-          </View>
-          <View style={styles.productItem}>
-            <Image
-              source={require('../assets/mock/cay-cam-ngot.jpg')}
-              style={styles.productImage}
-            />
-            <View>
-              <Text style={styles.price}>70.000 đ</Text>
-            </View>
-            <View style={{ marginHorizontal: 15, position: 'relative' }}>
-              <View style={styles.progessBar}></View>
-              <View style={styles.currentProgessBar}></View>
-              <Text numberOfLines={1} style={styles.textInProgressBar}>
-                Đã bán 50
-              </Text>
-            </View>
-          </View>
-          <View style={styles.productItem}>
-            <Image
-              source={require('../assets/mock/cay-cam-ngot.jpg')}
-              style={styles.productImage}
-            />
-            <View>
-              <Text style={styles.price}>70.000 đ</Text>
-            </View>
-            <View style={{ marginHorizontal: 15, position: 'relative' }}>
-              <View style={styles.progessBar}></View>
-              <View style={styles.currentProgessBar}></View>
-              <Text numberOfLines={1} style={styles.textInProgressBar}>
-                Đã bán 50
-              </Text>
-            </View>
-          </View>
-          <View style={styles.productItem}>
-            <Image
-              source={require('../assets/mock/cay-cam-ngot.jpg')}
-              style={styles.productImage}
-            />
-            <View>
-              <Text style={styles.price}>70.000 đ</Text>
-            </View>
-            <View style={{ marginHorizontal: 15, position: 'relative' }}>
-              <View style={styles.progessBar}></View>
-              <View style={styles.currentProgessBar}></View>
-              <Text numberOfLines={1} style={styles.textInProgressBar}>
-                Đã bán 50
-              </Text>
-            </View>
-          </View>
-          <View style={styles.productItem}>
-            <Image
-              source={require('../assets/mock/cay-cam-ngot.jpg')}
-              style={styles.productImage}
-            />
-            <View>
-              <Text style={styles.price}>70.000 đ</Text>
-            </View>
-            <View style={{ marginHorizontal: 15, position: 'relative' }}>
-              <View style={styles.progessBar}></View>
-              <View style={styles.currentProgessBar}></View>
-              <Text numberOfLines={1} style={styles.textInProgressBar}>
-                Đã bán 50
-              </Text>
-            </View>
-          </View>
-          <View style={styles.productItem}>
-            <Image
-              source={require('../assets/mock/cay-cam-ngot.jpg')}
-              style={styles.productImage}
-            />
-            <View>
-              <Text style={styles.price}>70.000 đ</Text>
-            </View>
-            <View style={{ marginHorizontal: 15, position: 'relative' }}>
-              <View style={styles.progessBar}></View>
-              <View style={styles.currentProgessBar}></View>
-              <Text numberOfLines={1} style={styles.textInProgressBar}>
-                Đã bán 50
-              </Text>
-            </View>
-          </View>
+          {bookList.map((book) => (
+            <TouchableOpacity
+              style={styles.productItem}
+              key={book.slug}
+              onPress={() => {
+                navigation.navigate('ProductScreen', { book })
+              }}
+            >
+              <Image source={{ uri: book.image }} style={styles.productImage} />
+              <View>
+                <Text style={styles.price}>{formatPrice(book.price)}</Text>
+              </View>
+              <View style={{ marginHorizontal: 15, position: 'relative' }}>
+                <View style={styles.progessBar}></View>
+                <View style={styles.currentProgessBar}></View>
+                <Text numberOfLines={1} style={styles.textInProgressBar}>
+                  Đã bán 50
+                </Text>
+              </View>
+            </TouchableOpacity>
+          ))}
         </ScrollView>
       </View>
     </View>

@@ -25,7 +25,12 @@ export default function NavigationBar() {
     >
       {/* <View style={styles.container}> */}
       <View style={styles.leftContainer}>
-        <Icon name="ios-search" size={20} color="#888" style={styles.icon} />
+        <Icon
+          name="search-outline"
+          size={20}
+          color="#888"
+          style={styles.icon}
+        />
         <TextInput
           style={styles.input}
           // onChangeText={onChangeText}

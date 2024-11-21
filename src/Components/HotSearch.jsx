@@ -5,7 +5,8 @@ import { Text } from 'react-native'
 import { View } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 
-function HotSearch() {
+function HotSearch(props) {
+  const { bookList } = props
   return (
     <View>
       <View style={styles.container}>
@@ -29,95 +30,24 @@ function HotSearch() {
           showsHorizontalScrollIndicator={false}
         >
           {/* San pham */}
-          <View style={styles.productItem}>
-            <Image
-              source={require('../assets/mock/nha-gia-kim.jpg')}
-              style={styles.productImage}
-            />
-            <View style={styles.productBody}>
-              <Text style={styles.title}>Nhà giả kim</Text>
-              <Text style={styles.sold}>Đã bán 4.5k</Text>
+          {bookList.map((book) => (
+            <View style={styles.productItem} key={book.slug}>
+              <Image source={{ uri: book.image }} style={styles.productImage} />
+              <View style={styles.productBody}>
+                <Text style={styles.title}>{book.bookName}</Text>
+                <Text style={styles.sold}>Đã bán 4.5k</Text>
+              </View>
+              <View style={styles.badge}>
+                <Icon
+                  name="trophy"
+                  size={13}
+                  color="#fff"
+                  style={styles.icon}
+                />
+                <Text style={styles.badgeText}>Bán chạy nhất</Text>
+              </View>
             </View>
-            <View style={styles.badge}>
-              <Icon name="trophy" size={13} color="#fff" style={styles.icon} />
-              <Text style={styles.badgeText}>Bán chạy nhất</Text>
-            </View>
-          </View>
-          {/* San pham */}
-          <View style={styles.productItem}>
-            <Image
-              source={require('../assets/mock/nha-gia-kim.jpg')}
-              style={styles.productImage}
-            />
-            <View style={styles.productBody}>
-              <Text style={styles.title}>Nhà giả kim</Text>
-              <Text style={styles.sold}>Đã bán 4.5k</Text>
-            </View>
-            <View style={styles.badge}>
-              <Icon name="trophy" size={13} color="#fff" style={styles.icon} />
-              <Text style={styles.badgeText}>Bán chạy nhất</Text>
-            </View>
-          </View>
-          {/* San pham */}
-          <View style={styles.productItem}>
-            <Image
-              source={require('../assets/mock/nha-gia-kim.jpg')}
-              style={styles.productImage}
-            />
-            <View style={styles.productBody}>
-              <Text style={styles.title}>Nhà giả kim</Text>
-              <Text style={styles.sold}>Đã bán 4.5k</Text>
-            </View>
-            <View style={styles.badge}>
-              <Icon name="trophy" size={13} color="#fff" style={styles.icon} />
-              <Text style={styles.badgeText}>Bán chạy nhất</Text>
-            </View>
-          </View>
-          {/* San pham */}
-          <View style={styles.productItem}>
-            <Image
-              source={require('../assets/mock/nha-gia-kim.jpg')}
-              style={styles.productImage}
-            />
-            <View style={styles.productBody}>
-              <Text style={styles.title}>Nhà giả kim</Text>
-              <Text style={styles.sold}>Đã bán 4.5k</Text>
-            </View>
-            <View style={styles.badge}>
-              <Icon name="trophy" size={13} color="#fff" style={styles.icon} />
-              <Text style={styles.badgeText}>Bán chạy nhất</Text>
-            </View>
-          </View>
-          {/* San pham */}
-          <View style={styles.productItem}>
-            <Image
-              source={require('../assets/mock/nha-gia-kim.jpg')}
-              style={styles.productImage}
-            />
-            <View style={styles.productBody}>
-              <Text style={styles.title}>Nhà giả kim</Text>
-              <Text style={styles.sold}>Đã bán 4.5k</Text>
-            </View>
-            <View style={styles.badge}>
-              <Icon name="trophy" size={13} color="#fff" style={styles.icon} />
-              <Text style={styles.badgeText}>Bán chạy nhất</Text>
-            </View>
-          </View>
-          {/* San pham */}
-          <View style={styles.productItem}>
-            <Image
-              source={require('../assets/mock/nha-gia-kim.jpg')}
-              style={styles.productImage}
-            />
-            <View style={styles.productBody}>
-              <Text style={styles.title}>Nhà giả kim</Text>
-              <Text style={styles.sold}>Đã bán 4.5k</Text>
-            </View>
-            <View style={styles.badge}>
-              <Icon name="trophy" size={13} color="#fff" style={styles.icon} />
-              <Text style={styles.badgeText}>Bán chạy nhất</Text>
-            </View>
-          </View>
+          ))}
         </ScrollView>
       </View>
     </View>

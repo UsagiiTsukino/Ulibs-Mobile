@@ -6,24 +6,22 @@ import {
   createAsyncThunk,
 } from '@reduxjs/toolkit'
 
-export const getUser = createAsyncThunk('getUser', async (_, thunkAPI) => {
-  const response = await http.get('getAll_books', {
-    signal: thunkAPI.signal,
-  })
-  return response.data
+export const setUser = createAsyncThunk('user/setUser', (body, _) => {
+  return body
 })
 
 const userSlice = createSlice({
   name: 'user',
-  initialState: {},
+  initialState: {
+    name: 'default',
+  },
   reducers: {},
   extraReducers(builder) {
-    builder.addCase(getUser.fulfilled, (state, action) => {
-      state.postList = action.payload
+    builder.addCase(setUser.fulfilled, (state, action) => {
+      state = action.payload
+      return state
     })
   },
 })
-
-export const { increment, decrement } = userSlice.actions
 
 export default userSlice.reducer

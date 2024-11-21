@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native'
 import React from 'react'
 import { StyleSheet, TouchableOpacity } from 'react-native'
 import { Badge } from 'react-native-paper'
@@ -5,12 +6,13 @@ import Icon from 'react-native-vector-icons/Ionicons'
 
 function CartAndChatBubble(props) {
   const { iconColor } = props
+  const navigation = useNavigation()
+  const onCartPress = () => {
+    navigation.navigate('CartScreen')
+  }
   return (
     <>
-      <TouchableOpacity
-        // onPress={onCartPress}
-        style={styles.iconContainer}
-      >
+      <TouchableOpacity onPress={onCartPress} style={styles.iconContainer}>
         <Icon
           name="cart-outline"
           size={26}

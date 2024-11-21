@@ -1,19 +1,27 @@
-import React, { useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { Platform, StyleSheet, Text, View, SafeAreaView } from 'react-native'
 import NavigationBar from '../Components/NavigationBar'
 import HomeCarousel from '../Components/HomeCarousel'
 import HorizontalScrollView from '../Components/HorizontalScrollView'
 import Banner from '../Components/Banner'
 import FlashSaleSection from '../Components/FlashSaleSection'
-import { ScrollView } from 'react-native'
+
 import HotSearch from '../Components/HotSearch'
 import SuggestList from '../Components/SuggestList'
 import { Animated } from 'react-native'
-import { Provider } from 'react-native-paper'
-import { theme } from '../core/theme'
 
+import { getProduct } from '../redux/Reducer/book.slice'
+import { useDispatch, useSelector } from 'react-redux'
 export default function Home({ navigation }) {
   const scrollY = useRef(new Animated.Value(0)).current
+  const dispatch = useDispatch()
+  const bookList = useSelector((state) => state.root.book)
+  useEffect(() => {
+    const promise = dispatch(getProduct())
+    return () => {
+      promise.abort()
+    }
+  }, [])
   return (
     <Animated.ScrollView
       vertical
@@ -36,9 +44,9 @@ export default function Home({ navigation }) {
         imagePath={require('../assets/Carousel/slide1.webp')}
         height={150}
       />
-      <FlashSaleSection />
-      <HotSearch />
-      <SuggestList />
+      <FlashSaleSection bookList={bookList} />
+      <HotSearch bookList={bookList} />
+      <SuggestList bookList={bookList} />
     </Animated.ScrollView>
   )
 }

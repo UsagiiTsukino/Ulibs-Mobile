@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { View } from 'react-native'
 import {
   SafeAreaView,
@@ -6,20 +6,52 @@ import {
   Text,
   TouchableOpacity,
   Image,
+  Platform,
 } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import CheckBox from 'expo-checkbox'
 import { Badge } from 'react-native-paper'
 import NumericInput from 'react-native-numeric-input'
+import formatPrice from '../helpers/formatPrice'
+import { useDispatch, useSelector } from 'react-redux'
+import { updateOrder } from '../redux/Reducer/order.slice'
 
-function Cart() {
+function Cart({ navigation }) {
   const [isSelected, setSelection] = useState(false)
+
+  const dispatch = useDispatch()
+  const orderList = useSelector((state) => state.root.order)
+
+  const [totalPrice, setTotalPrice] = useState(0)
+
+  useEffect(() => {
+    // Tính tổng giá từ orderList
+    const calculateTotalPrice = () => {
+      let totalPrice = 0
+      for (const order of orderList) {
+        totalPrice += order.quantity * order.price
+      }
+      setTotalPrice(totalPrice)
+    }
+
+    calculateTotalPrice()
+  }, [orderList])
+
+  const handleQuantityChange = (index, value) => {
+    const newOrderList = [...orderList]
+    newOrderList[index].quantity = value
+    dispatch(updateOrder(newOrderList))
+  }
+
   return (
     <SafeAreaView style={styles.droidSafeArea}>
       <View style={styles.header}>
         <TouchableOpacity
           style={{
             marginLeft: -75,
+          }}
+          onPress={() => {
+            navigation.goBack()
           }}
         >
           <Icon name="chevron-back-outline" size={40} color={'#ccc'} />
@@ -56,77 +88,79 @@ function Cart() {
       </View>
       <View style={styles.orderContainer}>
         <View style={styles.orderList}>
-          <View style={styles.orderItem}>
-            <View>
-              <Image
-                source={require('../assets/mock/cay-cam-ngot.jpg')}
-                style={{
-                  height: 250,
-                  width: 120,
-                  resizeMode: 'contain',
-                }}
-              />
-            </View>
-            <View
-              style={{
-                flexDirection: 'column',
-                marginLeft: 16,
-              }}
-            >
-              <Text
-                numberOfLines={1}
-                style={{
-                  marginTop: 8,
-                }}
-              >
-                Demo sách
-              </Text>
-              <Text
-                style={{
-                  fontSize: 11,
-                  color: 'red',
-                  padding: 2,
-                  borderWidth: 1,
-                  borderColor: 'red',
-                  width: 141,
-                  marginTop: 8,
-                }}
-              >
-                7 Ngày Miễn Phí Trả Hàng
-              </Text>
-              <Text
-                style={{
-                  color: '#fb5831',
-                  fontWeight: 'bold',
-                  marginTop: 8,
-                }}
-              >
-                123,456 đ
-              </Text>
-              <View
-                style={{
-                  marginTop: 8,
-                }}
-              >
-                <NumericInput
-                  value={0}
-                  // onChange={(value) => this.setState({ value })}
-                  totalWidth={100}
-                  totalHeight={30}
-                  iconSize={25}
-                  step={1}
-                  minValue={0}
-                  valueType="integer"
-                  rounded
-                  textColor="#B0228C"
-                  iconStyle={{ color: 'white' }}
-                  rightButtonBackgroundColor="#EA3788"
-                  leftButtonBackgroundColor="#E56B70"
-                  editable={false}
+          {orderList.map((order, index) => (
+            <View style={styles.orderItem} key={order.productName}>
+              <View>
+                <Image
+                  source={{ uri: order.image }}
+                  style={{
+                    height: 250,
+                    width: 120,
+                    resizeMode: 'contain',
+                  }}
                 />
               </View>
+              <View
+                style={{
+                  flexDirection: 'column',
+                  marginLeft: 16,
+                }}
+              >
+                <Text
+                  numberOfLines={1}
+                  style={{
+                    marginTop: 8,
+                  }}
+                >
+                  {order.productName}
+                </Text>
+                <Text
+                  style={{
+                    fontSize: 11,
+                    color: 'red',
+                    padding: 2,
+                    borderWidth: 1,
+                    borderColor: 'red',
+                    width: 141,
+                    marginTop: 8,
+                  }}
+                >
+                  7 Ngày Miễn Phí Trả Hàng
+                </Text>
+                <Text
+                  style={{
+                    color: '#fb5831',
+                    fontWeight: 'bold',
+                    marginTop: 8,
+                  }}
+                >
+                  {formatPrice(order.price)} đ
+                </Text>
+                <View
+                  style={{
+                    marginTop: 8,
+                  }}
+                >
+                  <NumericInput
+                    value={order.quantity}
+                    onChange={(value) => handleQuantityChange(index, value)}
+                    totalWidth={100}
+                    totalHeight={30}
+                    iconSize={25}
+                    step={1}
+                    minValue={1}
+                    valueType="integer"
+                    rounded
+                    textColor="#B0228C"
+                    iconStyle={{ color: 'white' }}
+                    rightButtonBackgroundColor="#EA3788"
+                    leftButtonBackgroundColor="#E56B70"
+                    editable={false}
+                  />
+                </View>
+              </View>
             </View>
-          </View>
+          ))}
         </View>
       </View>
       <View style={styles.footer}>
@@ -181,12 +215,15 @@ function Cart() {
                 fontWeight: 'bold',
               }}
             >
-              123,456 đ
+              {formatPrice(`${totalPrice}`)} đ
             </Text>
             <TouchableOpacity
               style={{
                 paddingHorizontal: 16,
                 paddingVertical: 16,
+              }}
+              onPress={() => {
+                navigation.navigate('PaymentScreen')
               }}
             >
               <Text
@@ -213,6 +250,7 @@ const styles = StyleSheet.create({
   droidSafeArea: {
     flex: 1,
     paddingTop: Platform.OS === 'android' ? 25 : 0,
+    backgroundColor: '#fff',
   },
   container: {
     backgroundColor: '#efefef',

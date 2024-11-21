@@ -11,21 +11,38 @@ import Logo from '../Components/Logo'
 import Header from '../Components/Header'
 import TextInput from '../Components/TextInput'
 import Button from '../Components/Button'
+import http from '../utils/http'
 
 export default function Register({ navigation }) {
   const [name, setName] = useState({ value: '', error: '' })
   const [email, setEmail] = useState({ value: '', error: '' })
   const [password, setPassword] = useState({ value: '', error: '' })
+  const [username, setUsername] = useState({ value: '', error: '' })
 
-  const onSignUpPressed = () => {
+  const onSignUpPressed = async () => {
     const nameError = nameValidator(name.value)
     const emailError = emailValidator(email.value)
     const passwordError = passwordValidator(password.value)
-    if (emailError || passwordError || nameError) {
+    const usernameError =
+      username.value === '' ? 'Tài khoản không được để trống' : ''
+    if (emailError || passwordError || nameError || usernameError) {
       setName({ ...name, error: nameError })
       setEmail({ ...email, error: emailError })
       setPassword({ ...password, error: passwordError })
+      setUsername({ ...username, error: usernameError })
       return
+    } else {
+      const response = await http.post('/register', {
+        username: username.value,
+        password: password.value,
+        email: email.value,
+        displayName: name.value,
+      })
+      if (response.data.code === 11000) {
+        console.log('That bai')
+      } else {
+        console.log('Thanh cong')
+      }
     }
   }
 
@@ -34,7 +51,7 @@ export default function Register({ navigation }) {
       <Logo />
       <Header>Đăng kí thành viên</Header>
       <TextInput
-        label="Name"
+        label="Tên hiển thị"
         returnKeyType="next"
         value={name.value}
         onChangeText={(text) => setName({ value: text, error: '' })}
@@ -48,6 +65,16 @@ export default function Register({ navigation }) {
         onChangeText={(text) => setEmail({ value: text, error: '' })}
         error={!!email.error}
         errorText={email.error}
+        autoCapitalize="none"
+        autoCompleteType="email"
+        textContentType="emailAddress"
+        keyboardType="email-address"
+      />
+      <TextInput
+        label="Tên đăng nhập"
+        returnKeyType="next"
+        value={username.value}
+        onChangeText={(text) => setUsername({ value: text, error: '' })}
         autoCapitalize="none"
         autoCompleteType="email"
         textContentType="emailAddress"
