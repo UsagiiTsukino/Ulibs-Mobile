@@ -32,12 +32,12 @@ export default function Home({ navigation }) {
       onScroll={Animated.event(
         [{ nativeEvent: { contentOffset: { y: scrollY } } }],
         {
-          useNativeDriver: false,
+          useNativeDriver: true,
         }
       )}
       scrollEventThrottle={16}
     >
-      <NavigationBar />
+      <NavigationBar scrollY={scrollY} />
       <HomeCarousel />
       <HorizontalScrollView />
       <Banner

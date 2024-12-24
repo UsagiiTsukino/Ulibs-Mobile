@@ -12,6 +12,7 @@ import Cart from './src/Screens/Cart'
 import Product from './src/Screens/Product'
 import { store } from './src/redux/store'
 import Payment from './src/Screens/Payment'
+import PaymentSuccess from './src/Screens/PaymentSuccess' // Import PaymentSuccess
 
 export default function App() {
   const Stack = createStackNavigator()
@@ -32,6 +33,7 @@ export default function App() {
           <Stack.Screen name="CartScreen" component={Cart} />
           <Stack.Screen name="ProductScreen" component={Product} />
           <Stack.Screen name="PaymentScreen" component={Payment} />
+          <Stack.Screen name="PaymentSuccess" component={PaymentSuccess} /> 
         </Stack.Navigator>
         {/* <MainScreen />  */}
       </NavigationContainer>

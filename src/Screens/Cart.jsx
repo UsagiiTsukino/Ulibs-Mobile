@@ -7,40 +7,46 @@ import {
   TouchableOpacity,
   Image,
   Platform,
+  ScrollView,
 } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import CheckBox from 'expo-checkbox'
 import { Badge } from 'react-native-paper'
-import NumericInput from 'react-native-numeric-input'
+import NumericInput from '../Components/NumbericInput'
 import formatPrice from '../helpers/formatPrice'
 import { useDispatch, useSelector } from 'react-redux'
-import { updateOrder } from '../redux/Reducer/order.slice'
+import { updateOrder, deleteOrder } from '../redux/Reducer/order.slice'
 
 function Cart({ navigation }) {
   const [isSelected, setSelection] = useState(false)
+  const [isEditMode, setEditMode] = useState(false) // New state for edit mode
 
   const dispatch = useDispatch()
   const orderList = useSelector((state) => state.root.order)
 
   const [totalPrice, setTotalPrice] = useState(0)
 
-  useEffect(() => {
-    // Tính tổng giá từ orderList
-    const calculateTotalPrice = () => {
-      let totalPrice = 0
-      for (const order of orderList) {
-        totalPrice += order.quantity * order.price
-      }
-      setTotalPrice(totalPrice)
-    }
+  const handleQuantityChange = (productName, value) => {
+    const newOrderList = orderList.map(order => 
+      order.productName === productName ? { ...order, quantity: value } : order
+    )
+    dispatch(updateOrder(newOrderList))
+  }
 
-    calculateTotalPrice()
+  const calculateTotalPrice = (orders) => {
+    let totalPrice = 0
+    for (const order of orders) {
+      totalPrice += order.quantity * order.price
+    }
+    setTotalPrice(totalPrice)
+  }
+
+  useEffect(() => {
+    calculateTotalPrice(orderList)
   }, [orderList])
 
-  const handleQuantityChange = (index, value) => {
-    const newOrderList = [...orderList]
-    newOrderList[index].quantity = value
-    dispatch(updateOrder(newOrderList))
+  const handleDeleteOrder = (productName) => {
+    dispatch(deleteOrder(productName))
   }
 
   return (
@@ -66,7 +72,7 @@ function Cart({ navigation }) {
           }}
         >
           <TouchableOpacity
-            // onPress={onCartPress}
+            onPress={() => setEditMode(!isEditMode)} // Toggle edit mode
             style={styles.iconContainer}
           >
             <Text style={{ fontSize: 18, color: '#fb5831' }}>Sửa</Text>
@@ -88,7 +94,7 @@ function Cart({ navigation }) {
       </View>
       <View style={styles.orderContainer}>
         <View style={styles.orderList}>
-          {orderList.map((order, index) => (
+          {orderList.map((order) => (
             <View style={styles.orderItem} key={order.productName}>
               <View>
                 <Image
@@ -143,22 +149,20 @@ function Cart({ navigation }) {
                 >
                   <NumericInput
                     value={order.quantity}
-                    onChange={(value) => handleQuantityChange(index, value)}
-                    totalWidth={100}
-                    totalHeight={30}
-                    iconSize={25}
-                    step={1}
+                    onChange={(value) => handleQuantityChange(order.productName, value)}
                     minValue={1}
-                    valueType="integer"
-                    rounded
-                    textColor="#B0228C"
-                    iconStyle={{ color: 'white' }}
-                    rightButtonBackgroundColor="#EA3788"
-                    leftButtonBackgroundColor="#E56B70"
-                    editable={false}
+                    step={1}
                   />
                 </View>
               </View>
+              {isEditMode && (
+                <TouchableOpacity
+                  style={styles.deleteButton}
+                  onPress={() => handleDeleteOrder(order.productName)}
+                >
+                  <Text style={styles.deleteButtonText}>X</Text>
+                </TouchableOpacity>
+              )}
             </View>
           ))}
         </View>
@@ -213,25 +217,29 @@ function Cart({ navigation }) {
                 fontSize: 20,
                 color: '#fb5831',
                 fontWeight: 'bold',
+                marginRight: 8, // Add margin between total price and button
               }}
             >
               {formatPrice(`${totalPrice}`)} đ
             </Text>
             <TouchableOpacity
               style={{
-                paddingHorizontal: 16,
-                paddingVertical: 16,
+                paddingHorizontal: 12,
+                paddingVertical: 12,
+                backgroundColor: orderList.length === 0 ? '#ccc' : '#fb5831',
+                borderRadius: 20, // Add border radius
               }}
               onPress={() => {
-                navigation.navigate('PaymentScreen')
+                if (orderList.length > 0) {
+                  navigation.navigate('PaymentScreen')
+                }
               }}
+              disabled={orderList.length === 0}
             >
               <Text
                 style={{
                   color: '#fff',
-
-                  width: 100,
-                  backgroundColor: '#fb5831',
+                  width: 100, // Original width
                   textAlign: 'center',
                   paddingHorizontal: 16,
                   paddingVertical: 16,
@@ -310,6 +318,19 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     height: 150,
+  },
+  deleteButton: {
+    backgroundColor: '#fb5831',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 30,
+    height: '100%',
+    position: 'absolute',
+    right: 0,
+  },
+  deleteButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
   },
 })
 export default Cart

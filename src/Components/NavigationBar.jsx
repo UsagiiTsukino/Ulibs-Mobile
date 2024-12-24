@@ -1,29 +1,28 @@
-import React, { useRef } from 'react'
-import { StyleSheet, TextInput, TouchableOpacity } from 'react-native'
+import React, { useState, useEffect } from 'react'
+import { StyleSheet, TextInput } from 'react-native'
 import { View } from 'react-native'
-import { Badge } from 'react-native-paper'
 import Icon from 'react-native-vector-icons/Ionicons'
 import CartAndChatBubble from './CartAndChatBubble'
 import { Animated } from 'react-native'
-export default function NavigationBar() {
-  // const [searchQuery, setSearchQuery] = React.useState('');
 
-  // const onChangeSearch = query => setSearchQuery(query);
-  const scrollY = useRef(new Animated.Value(0)).current
+export default function NavigationBar({ scrollY }) {
+  const [backgroundColor, setBackgroundColor] = useState('transparent')
+
+  useEffect(() => {
+    const listener = scrollY.addListener(({ value }) => {
+      if (value > 50) {
+        setBackgroundColor('orange')
+      } else {
+        setBackgroundColor('transparent')
+      }
+    })
+    return () => {
+      scrollY.removeListener(listener)
+    }
+  }, [scrollY])
+
   return (
-    <Animated.View
-      style={[
-        styles.container,
-        {
-          backgroundColor: scrollY.interpolate({
-            inputRange: [0, 30],
-            outputRange: ['transparent', '#fff'],
-            extrapolate: 'clamp',
-          }),
-        },
-      ]}
-    >
-      {/* <View style={styles.container}> */}
+    <Animated.View style={[styles.container, { backgroundColor }]}>
       <View style={styles.leftContainer}>
         <Icon
           name="search-outline"
@@ -33,7 +32,6 @@ export default function NavigationBar() {
         />
         <TextInput
           style={styles.input}
-          // onChangeText={onChangeText}
           placeholder={'NGÀY HỘI SIÊU SALE 50%'}
           placeholderTextColor="#fb5831"
           fontSize={13}
@@ -45,10 +43,8 @@ export default function NavigationBar() {
     </Animated.View>
   )
 }
+
 const styles = StyleSheet.create({
-  placeholder: {
-    color: 'orange',
-  },
   container: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -59,8 +55,8 @@ const styles = StyleSheet.create({
     position: 'fixed',
     top: 35,
     left: 0,
+    right: 0,
     zIndex: 1,
-    backgroundColor: 'brown',
   },
   leftContainer: {
     flexDirection: 'row',
@@ -73,5 +69,13 @@ const styles = StyleSheet.create({
   },
   rightContainer: {
     flexDirection: 'row',
+  },
+  icon: {
+    marginRight: 8,
+  },
+  input: {
+    flex: 1,
+    fontSize: 16,
+    color: '#000',
   },
 })

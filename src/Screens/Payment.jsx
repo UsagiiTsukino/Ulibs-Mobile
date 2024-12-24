@@ -14,7 +14,7 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import { useDispatch, useSelector } from 'react-redux'
 import formatPrice from '../helpers/formatPrice'
 
-function Payment() {
+function Payment({ navigation }) {
   const orderList = useSelector((state) => state.root.order)
   let totalPrice = 0
   for (const order of orderList) {
@@ -65,6 +65,7 @@ function Payment() {
             <Text style={styles.orderText}>Đơn hàng</Text>
             {orderList.map((order) => (
               <View
+                key={order.productName}
                 style={{
                   flexDirection: 'row',
                   borderWidth: 0.3,
@@ -176,6 +177,7 @@ function Payment() {
               paddingVertical: 16,
               paddingHorizontal: 24,
             }}
+            onPress={() => navigation.navigate('PaymentSuccess')}
           >
             <Text
               style={{

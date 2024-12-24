@@ -3,7 +3,7 @@ import {
   Text,
   View,
   Image,
-  StyleSheet,
+  StyleSheet, 
   ScrollView,
   TouchableOpacity,
   Dimensions,
@@ -12,7 +12,7 @@ import Avatar from '../Components/Avatar'
 import Icon from 'react-native-vector-icons/Ionicons'
 import formatPrice from '../helpers/formatPrice'
 import Modal from 'react-native-modal'
-import NumericInput from 'react-native-numeric-input'
+import NumericInput from '../Components/NumbericInput'
 import { useDispatch, useSelector } from 'react-redux'
 import { addOrder } from '../redux/Reducer/order.slice'
 function Product({ navigation, route }) {
@@ -479,18 +479,8 @@ function Product({ navigation, route }) {
             <NumericInput
               value={quatity}
               onChange={(value) => setQuatity(value)}
-              totalWidth={80}
-              totalHeight={30}
-              iconSize={25}
-              step={1}
               minValue={1}
-              valueType="integer"
-              rounded
-              textColor="#B0228C"
-              iconStyle={{ color: 'white' }}
-              rightButtonBackgroundColor="#EA3788"
-              leftButtonBackgroundColor="#E56B70"
-              editable={true}
+              step={1}
             />
           </View>
           <TouchableOpacity
